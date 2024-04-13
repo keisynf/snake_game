@@ -9,6 +9,8 @@
   --square2: #febbcf;
   --snakeColor: black;
   --foodColor: red;
+
+  --snakeColor: #bde0fe;
 }
 
 * {
