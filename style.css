@@ -1,23 +1,65 @@
+:root {
+  --smallBorder: 4vh;
+  --canvasSize: 70vh;
+  --borderRadius: 0.75rem;
+
+  --borderColorDark: #fb6f92;
+  --borderColorLight: #ff8fab;
+  --square1: #ffc2d1;
+  --square2: #ff9aa2;
+  --snakeColor: black;
+  --foodColor: red;
+}
+
 * {
-    padding: 0;
-    margin: 0;
-  }
-  canvas {
-    background: rgb(15 15 15);
-    display: block;
-    margin: 0 auto;
-    margin-top: 10px;
-    /* border: 5px dashed black; */
-  }
-  
-  button {
-    display: block;
-    margin: 0 auto;
-    margin-top: 10px;
-    padding: 5px 10px;
-    background: rgb(0, 0, 0);
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
+  padding: 0;
+  margin: 0;
+}
+canvas {
+  height: var(--canvasSize);
+  width: var(--canvasSize);
+  bottom: var(--smallBorder);
+  background: var(--square1);
+  /* border-radius: 15px; */
+}
+
+.border {
+  background-color: var(--borderColorLight);
+  height: calc(var(--canvasSize) + 4 * var(--smallBorder));
+  width: calc(var(--canvasSize) + 2 * var(--smallBorder));
+  border-radius: var(--borderRadius);
+}
+
+.center-horizontally {
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.center {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.top {
+  top: 0;
+  height: calc(2 * var(--smallBorder));
+  background-color: var(--borderColorDark);
+  border-top-left-radius: var(--borderRadius);
+  border-top-right-radius: var(--borderRadius);
+}
+
+/* button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: rgb(0, 0, 0);
+  color: white;
+  border: none;
+  cursor: pointer;
+} */
