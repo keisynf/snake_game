@@ -1,3 +1,5 @@
+//* Declare Variables
+
 // Canvas variables
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
@@ -16,14 +18,20 @@ let leftPressed = false;
 let upPressed = false;
 let downPressed = false;
 
+// FPS Variables
 let fps = 1; // Desired fps
 let now;
 let then = Date.now();
 let interval = 1000 / fps;
 let delta;
 
+//* Event listeners
+
+// Keyboard event listeners
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+
+//* Functions
 
 // Keyboard functions
 function keyDownHandler(e) {
@@ -46,6 +54,7 @@ function keyUpHandler(e) {
   }
 }
 
+//* Class definitions
 class Squares {
   constructor(x, y, size, color) {
     this.x = x;
@@ -91,6 +100,8 @@ class Snake {
   }
 }
 
+//* Draw elements
+
 // Draw the squares
 function drawSquares() {
   for (let i = 0; i < squaresRowCount; i++) {
@@ -116,6 +127,8 @@ drawSquares();
 // Draw the snake
 let snake = new Snake(0, 0, 1, 0, 3, "#bde0fe");
 snake.draw();
+
+//* Animation
 
 function animate() {
   requestAnimationFrame(animate);
