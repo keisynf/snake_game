@@ -16,6 +16,23 @@ let direction = "right";
 const x = 0;
 const y = 8;
 
+document.addEventListener("keydown", keyDownHandler, false);
+
+function keyDownHandler(e) {
+  console.log(e.key);
+  if (e.key === "Enter") {
+    startGame();
+    document.removeEventListener("keydown", keyDownHandler, false);
+  }
+}
+
+function startGame() {
+  setInterval(() => {
+    snake.moveSnake();
+    draw();
+  }, 200);
+}
+
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -109,8 +126,3 @@ const food = new Square(
 );
 
 draw();
-
-setInterval(() => {
-  snake.moveSnake();
-  draw();
-}, 200);
