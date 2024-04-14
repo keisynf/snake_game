@@ -4,82 +4,33 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-// Square Variables
-let squaresRowCount = 15;
-let size = canvas.width / squaresRowCount;
-let x = 0;
-let y = 0;
+// Grid variables
+const gridCount = 16;
+const size = canvas.width / gridCount;
 const squareColor1 = "#ffceda";
 const squareColor2 = "#febbcf";
+
+// Snake variables
 const snakeColor = "#bde0fe";
-
-// Snake Variables
-const xStart = 2;
-const yStart = 7;
 let direction = "right";
+const x = 0;
+const y = 8;
 
-//* Class definitions
-class Square {
-  constructor(x, y, color) {
-    this.x = x;
-    this.y = y;
-    this.color = color;
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.rect(this.x * size, this.y * size, size, size);
-    ctx.fill();
-    ctx.closePath();
-  }
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-class Snake {
-  constructor(segments) {
-    this.segments = segments;
-  }
-  draw() {
-    console.log(this.segments);
-    this.segments.forEach((segment) => {
-      segment.draw();
-    });
-  }
-  move() {
-    const head = { ...this.segments[0] };
-    switch (direction) {
-      case "up":
-        head.y--;
-        break;
-      case "down":
-        head.y++;
-        break;
-      case "left":
-        head.x--;
-        break;
-      case "right":
-        head.x++;
-        break;
-    }
-
-    this.segments.unshift(head);
-    this.segments.pop();
-
-    console.log(this.segments);
-  }
-}
-
-//* Draw elements
-
-// Draw background squares
-function drawSquares() {
-  for (let i = 0; i < squaresRowCount; i++) {
-    for (let j = 0; j < squaresRowCount; j++) {
+function drawBackground() {
+  let x = 0;
+  let y = 0;
+  for (let i = 0; i < gridCount; i++) {
+    for (let j = 0; j < gridCount; j++) {
       if ((i % 2 === 0 && j % 2 === 0) || (i % 2 !== 0 && j % 2 !== 0)) {
-        let square = new Square(x, y, squareColor1);
+        const square = new Square(x, y, size, squareColor1);
         square.draw();
         x++;
       } else {
-        let square = new Square(x, y, squareColor2);
+        const square = new Square(x, y, size, squareColor2);
         square.draw();
         x++;
       }
@@ -90,18 +41,76 @@ function drawSquares() {
   y = 0;
 }
 
-drawSquares();
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBackground();
+  snake.draw();
+  food.draw();
+}
 
-console.log(xStart, yStart);
-// Draw snake
-const snake = new Snake([new Square(xStart, yStart, snakeColor)]);
-console.log(snake.segments);
+class Square {
+  constructor(x, y, size, color) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.color = color;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x * this.size, this.y * this.size, this.size, this.size);
+  }
+}
 
-snake.draw();
+class Snake {
+  constructor(squares, direction) {
+    this.squares = squares;
+    this.direction = direction;
+  }
+  draw() {
+    this.squares.forEach((square) => {
+      square.draw();
+    });
+  }
+  moveSnake() {
+    const head = new Square(
+      this.squares[0].x,
+      this.squares[0].y,
+      this.squares[0].size,
+      this.squares[0].color
+    );
+
+    switch (this.direction) {
+      case "right":
+        head.x++;
+        break;
+      case "left":
+        head.x--;
+        break;
+      case "up":
+        head.y--;
+        break;
+      case "down":
+        head.y++;
+        break;
+    }
+
+    this.squares.unshift(head);
+    this.squares.pop();
+  }
+}
+
+const snake = new Snake([new Square(x, y, size, snakeColor)], direction);
+
+const food = new Square(
+  random(0, gridCount - 1),
+  random(0, gridCount - 1),
+  size,
+  "red"
+);
+
+draw();
 
 setInterval(() => {
-  snake.move();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawSquares();
-  snake.draw();
-}, 1000);
+  snake.moveSnake();
+  draw();
+}, 200);
