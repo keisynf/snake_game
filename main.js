@@ -3,6 +3,8 @@
 // Canvas variables
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
+const scoreElement = document.getElementById("scoreCount");
+const highScoreElement = document.getElementById("highScoreCount");
 
 // Grid variables
 const gridCount = 15;
@@ -23,6 +25,8 @@ const foodColor = "#e73668";
 let gameStarted = false;
 let gameSpeedDelay = 200;
 let gameInterval;
+let score = 0;
+let highScore = 0;
 
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -54,6 +58,7 @@ function draw() {
   drawBackground();
   snake.draw();
   food.draw();
+  drawScores();
 }
 
 class Square {
@@ -219,4 +224,13 @@ function restartGame() {
   gameSpeedDelay = 200;
   gameStarted = false;
   draw();
+}
+
+function drawScores() {
+  score = snake.squares.length - 1;
+  scoreElement.innerHTML = score;
+  if (score > highScore) {
+    highScore = score;
+    highScoreElement.innerHTML = highScore;
+  }
 }

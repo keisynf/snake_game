@@ -55,6 +55,22 @@ canvas {
   border-top-right-radius: var(--borderRadius);
 }
 
+.score {
+  position: absolute;
+  top: calc(var(--smallBorder) / 2); /* Adjust the vertical position */
+  font-size: 1.5rem; /* Adjust font size as needed */
+  color: white;
+  font-family: "VT323", monospace;
+}
+
+#scoreCount {
+  left: calc(var(--smallBorder)); /* Position on the top left corner */
+}
+
+#highScoreCount {
+  right: calc(var(--smallBorder)); /* Position on the top right corner */
+}
+
 /* button {
   display: block;
   margin: 0 auto;
